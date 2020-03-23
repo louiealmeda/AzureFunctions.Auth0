@@ -76,7 +76,7 @@ namespace AzureFunctions.Auth0
                     var handler = new JwtSecurityTokenHandler();
                     result = handler.ValidateToken(value.Parameter, validationParameter, out var token);
                 }
-                catch (SecurityTokenSignatureKeyNotFoundException ex1)
+                catch (SecurityTokenSignatureKeyNotFoundException)
                 {
                     // This exception is thrown if the signature key of the JWT could not be found.
                     // This could be the case when the issuer changed its signing keys, so we trigger a 
@@ -84,7 +84,7 @@ namespace AzureFunctions.Auth0
                     _configurationManager.RequestRefresh();
                     tries++;
                 }
-                catch (SecurityTokenException ex2)
+                catch (SecurityTokenException)
                 {
                     return null;
                 }
